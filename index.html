@@ -8,7 +8,7 @@
 </head>
 
 <body>
-  <h1>v9.4<h1>
+  <h1>v9.5<h1>
 
       <h2>Current Location</h2>
       <p id="coordswatch">Waiting for location...</p>
@@ -38,12 +38,15 @@
 
         // hav(theta) = hav(bLat - aLat) + cos(aLat) * cos(bLat) * hav(bLon - aLon)
         function haversineDistance(a, b) {
+          console.log('e1',a,b)
           const aLat = toRad(Array.isArray(a) ? a[1] : a.latitude ?? a.lat)
+          console.log('e2',aLat)
           const bLat = toRad(Array.isArray(b) ? b[1] : b.latitude ?? b.lat)
           const aLng = toRad(Array.isArray(a) ? a[0] : a.longitude ?? a.lng ?? a.lon)
           const bLng = toRad(Array.isArray(b) ? b[0] : b.longitude ?? b.lng ?? b.lon)
 
           const ht = hav(bLat - aLat) + cos(aLat) * cos(bLat) * hav(bLng - aLng)
+          console.log('e3',bLat,aLng,ht)
           return 2 * R * asin(sqrt(ht))
         }
 
@@ -162,16 +165,16 @@
           x.innerHTML = `Smoothed latitude: ${smoothLat}, smoothed longitude: ${smoothLng}`;
 
           // Loop over the locations array and calculate the distance to each one
-          console.log(11)
+          console.log('11')
           for (let location of locations) {
             // Get the fixed point coordinates
             const lat2 = location.lat;
             const lon2 = location.lon;
-            console.log(12)
+            console.log('12')
 
             // Calculate the distance using the haversine formula
             const distance = haversineDistance(smoothLat, smoothLng, lat2, lon2);
-            console.log(13)
+            console.log('13')
             console.log(3, smoothLat, smoothLng, lat2, lon2, distance)
             x.innerHTML = `Smoothed latitude: ${smoothLat}, smoothed longitude: ${smoothLng}`;
 
