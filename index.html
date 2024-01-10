@@ -68,11 +68,11 @@
           //
           filter(lat, lon, accuracy, timestampInMs) {
             if (accuracy < this.minAccuracy) accuracy = this.minAccuracy
-            console.log('accuracy is', accuracy)
+            //console.log('accuracy is', accuracy)
 
             // if variance < 0, object is unitialised, so initialise with current values
             if (this.variance < 0) {
-              console.log('initialised values')
+              //console.log('initialised values')
               this.timestampInMs = timestampInMs
               this.lat = lat
               this.lon = lon
@@ -81,7 +81,7 @@
 
             // else apply Kalman filter methodology
             else {
-              console.log('applying kalman filtering now')
+              //console.log('applying kalman filtering now')
               const timeIncMs = timestampInMs - this.timestampInMs
 
               // time has moved on, so the uncertainty in the current position increases
@@ -121,7 +121,7 @@
                 const smoothLat = kalmanXY[0];
                 const smoothLng = kalmanXY[1];
 
-                console.log(`Smoothed latitude: ${smoothLat}, smoothed longitude: ${smoothLng}`);
+                console.log(`Smoothed latitude: ${smoothLat}, smoothed longitude: ${smoothLng}, accuracy: ${acc}, timeS: ${Math.floor(timems / 1000)}`);
                 showwatchPosition(smoothLat, smoothLng); // Call showPosition to update the coordinates on the screen using the smoothed values
               },
               function (error) {
@@ -193,7 +193,7 @@
           const distancewatch = document.createElement("div");
           distancewatch.id = `distancewatch-${location.name}`;
           // outer.appendChild(h1); // Comment out or delete this line to remove the haversine distance titles
-          outer.appendChild(distancewatch);
+          //outer.appendChild(distancewatch);
         }
       </script>
 
