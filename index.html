@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 
@@ -9,7 +8,7 @@
 </head>
 
 <body>
-  <h1>v8.6<h1>
+  <h1>v8.7<h1>
 
       <h2>Current Location</h2>
       <p id="coordswatch">Waiting for location...</p>
@@ -22,6 +21,31 @@
      -->
 
       <script type="module">
+        const asin = Math.asin
+        const cos = Math.cos
+        const sin = Math.sin
+        const sqrt = Math.sqrt
+        const PI = Math.PI
+
+        // equatorial mean radius of Earth (in meters)
+        const R = 6378137
+
+        function squared(x) { return x * x }
+        function toRad(x) { return x * PI / 180.0 }
+        function hav(x) {
+          return squared(sin(x / 2))
+        }
+
+        // hav(theta) = hav(bLat - aLat) + cos(aLat) * cos(bLat) * hav(bLon - aLon)
+        function haversineDistance(a, b) {
+          const aLat = toRad(Array.isArray(a) ? a[1] : a.latitude ?? a.lat)
+          const bLat = toRad(Array.isArray(b) ? b[1] : b.latitude ?? b.lat)
+          const aLng = toRad(Array.isArray(a) ? a[0] : a.longitude ?? a.lng ?? a.lon)
+          const bLng = toRad(Array.isArray(b) ? b[0] : b.longitude ?? b.lng ?? b.lon)
+
+          const ht = hav(bLat - aLat) + cos(aLat) * cos(bLat) * hav(bLng - aLng)
+          return 2 * R * asin(sqrt(ht))
+        }
 
         class GPSKalmanFilter {
           // Decay in m/s - 3 is a good number for walking pace, 
@@ -44,7 +68,7 @@
           //
           filter(lat, lon, accuracy, timestampInMs) {
             if (accuracy < this.minAccuracy) accuracy = this.minAccuracy
-            console.log('accuracy is',accuracy)
+            console.log('accuracy is', accuracy)
 
             // if variance < 0, object is unitialised, so initialise with current values
             if (this.variance < 0) {
@@ -73,7 +97,7 @@
               this.lon += _k * (lon - this.lon)
               // new Covarariance  matrix is (IdentityMatrix - K) * Covarariance 
               this.variance = (1 - _k) * this.variance
-            }  
+            }
             return [this.lon, this.lat]
           }
         }//class 
@@ -88,10 +112,10 @@
                 const acc = position.coords.accuracy;
                 const timems = position.timestamp;
 
-                console.log(1,lat,lng,acc,timems)
+                console.log(1, lat, lng, acc, timems)
                 // Apply the Kalman filter to the GPS data
                 let kalmanXY = kalman.filter(lat, lng, acc, timems);
-                console.log(2,kalmanXY)
+                console.log(2, kalmanXY)
 
                 // Get the smoothed coordinates from the filter output
                 const smoothLat = kalmanXY[0];
@@ -138,7 +162,7 @@
           }
         }
 
-        const kalman = new GPSKalmanFilter(); 
+        const kalman = new GPSKalmanFilter();
         window.addEventListener("load", WatchLocation);
 
         // Create an array of objects to store the locations and their names
