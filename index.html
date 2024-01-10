@@ -8,7 +8,7 @@
 </head>
 
 <body>
-  <h1>v9.0<h1>
+  <h1>v9.1<h1>
 
       <h2>Current Location</h2>
       <p id="coordswatch">Waiting for location...</p>
@@ -193,7 +193,7 @@
           const distancewatch = document.createElement("div");
           distancewatch.id = `distancewatch-${location.name}`;
           outer.appendChild(h1); // Comment out or delete this line to remove the haversine distance titles
-          //outer.appendChild(distancewatch);
+          outer.appendChild(distancewatch);
         }
       </script>
 
