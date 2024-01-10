@@ -9,7 +9,7 @@
 </head>
 
 <body>
-  <h1>v8.1<h1>
+  <h1>v8.2<h1>
 
       <h2>Current Location</h2>
       <p id="coordswatch">Waiting for location...</p>
@@ -89,8 +89,10 @@
                 const acc = position.coords.accuracy;
                 const timems = position.timestamp;
 
+                console.log(1,lat,lng,acc,timems)
                 // Apply the Kalman filter to the GPS data
                 let kalmanXY = kalman.filter(lat, lng, acc, timems);
+                console.log(2,kalmanXY)
 
                 // Get the smoothed coordinates from the filter output
                 const smoothLat = kalmanXY[0];
