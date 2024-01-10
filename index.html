@@ -44,7 +44,7 @@
           //
           filter(lat, lon, accuracy, timestampInMs) {
             if (accuracy < this.minAccuracy) accuracy = this.minAccuracy
-            //console.log('accuracy is',accuracy)
+            console.log('accuracy is',accuracy)
 
             // if variance < 0, object is unitialised, so initialise with current values
             if (this.variance < 0) {
@@ -57,7 +57,7 @@
 
             // else apply Kalman filter methodology
             else {
-              //console.log('applying kalman filtering now')
+              console.log('applying kalman filtering now')
               const timeIncMs = timestampInMs - this.timestampInMs
 
               // time has moved on, so the uncertainty in the current position increases
