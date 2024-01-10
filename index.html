@@ -8,7 +8,7 @@
 </head>
 
 <body>
-  <h1>v9.3<h1>
+  <h1>v9.4<h1>
 
       <h2>Current Location</h2>
       <p id="coordswatch">Waiting for location...</p>
@@ -162,13 +162,16 @@
           x.innerHTML = `Smoothed latitude: ${smoothLat}, smoothed longitude: ${smoothLng}`;
 
           // Loop over the locations array and calculate the distance to each one
+          console.log(11)
           for (let location of locations) {
             // Get the fixed point coordinates
             const lat2 = location.lat;
             const lon2 = location.lon;
+            console.log(12)
 
             // Calculate the distance using the haversine formula
             const distance = haversineDistance(smoothLat, smoothLng, lat2, lon2);
+            console.log(13)
             console.log(3, smoothLat, smoothLng, lat2, lon2, distance)
             x.innerHTML = `Smoothed latitude: ${smoothLat}, smoothed longitude: ${smoothLng}`;
 
