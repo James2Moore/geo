@@ -8,7 +8,7 @@
 </head>
 
 <body>
-  <h1>v9.2<h1>
+  <h1>v9.3<h1>
 
       <h2>Current Location</h2>
       <p id="coordswatch">Waiting for location...</p>
@@ -139,32 +139,6 @@
           }
         }
 
-        function showwatchPosition(smoothLat, smoothLng) {
-          const x = document.getElementById("coordswatch");
-
-          x.innerHTML = `Smoothed latitude: ${smoothLat}, smoothed longitude: ${smoothLng}`;
-
-          // Loop over the locations array and calculate the distance to each one
-          for (let location of locations) {
-            // Get the fixed point coordinates
-            const lat2 = location.lat;
-            const lon2 = location.lon;
-
-            // Calculate the distance using the haversine formula
-            const distance = haversineDistance(smoothLat, smoothLng, lat2, lon2);
-
-            // Convert the distance from km to m
-            const distanceInMeters = distance * 1000;
-
-            // Display the distance in a new element with the location name
-            const y = document.getElementById(`distancewatch-${location.name}`);
-            y.innerHTML = `<h2>${location.name}</h2><p>Distance: ${distanceInMeters.toFixed(2)} m</p>`; // Round the distance to 2 decimal places and use tags
-          }
-        }
-
-        const kalman = new GPSKalmanFilter();
-        window.addEventListener("load", WatchLocation);
-
         // Create an array of objects to store the locations and their names
         //format: {name: "Robotics Walkway", lat: 34.123754, lon: -117.7378068},
         const locations = [
@@ -181,6 +155,34 @@
           { name: "Library Room North, 3, South", lat: 34.1239534, lon: -117.7388547 },
           { name: "Library Room 2", lat: 34.1240165, lon: -117.7387937 },
         ];
+
+        function showwatchPosition(smoothLat, smoothLng) {
+          const x = document.getElementById("coordswatch");
+
+          x.innerHTML = `Smoothed latitude: ${smoothLat}, smoothed longitude: ${smoothLng}`;
+
+          // Loop over the locations array and calculate the distance to each one
+          for (let location of locations) {
+            // Get the fixed point coordinates
+            const lat2 = location.lat;
+            const lon2 = location.lon;
+
+            // Calculate the distance using the haversine formula
+            const distance = haversineDistance(smoothLat, smoothLng, lat2, lon2);
+            console.log(3, smoothLat, smoothLng, lat2, lon2, distance)
+            x.innerHTML = `Smoothed latitude: ${smoothLat}, smoothed longitude: ${smoothLng}`;
+
+            // Convert the distance from km to m
+            const distanceInMeters = distance * 1000;
+
+            // Display the distance in a new element with the location name
+            const y = document.getElementById(`distancewatch-${location.name}`);
+            y.innerHTML = `<h2>${location.name}</h2><p>Distance: ${distanceInMeters.toFixed(2)} m</p>`; // Round the distance to 2 decimal places and use tags
+          }
+        }
+
+        const kalman = new GPSKalmanFilter();
+        window.addEventListener("load", WatchLocation);
 
         // Loop over the locations array and create the HTML elements for each one
         for (let location of locations) {
