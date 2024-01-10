@@ -8,7 +8,7 @@
 </head>
 
 <body>
-  <h1>v9.7<h1>
+  <h1>v9.8<h1>
 
       <h2>Current Location</h2>
       <p id="coordswatch">Waiting for location...</p>
@@ -167,7 +167,8 @@
             x.innerHTML = `Smoothed latitude: ${smoothLat}, smoothed longitude: ${smoothLng}`;
 
             // Convert the distance from km to m
-            const distanceInMeters = distance * 1000;
+            //const distanceInMeters = distance * 1000;
+            const distanceInMeters = distance * 1;
 
             // Display the distance in a new element with the location name
             const y = document.getElementById(`distancewatch-${location.name}`);
