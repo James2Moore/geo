@@ -10,7 +10,7 @@
 </head>
 
 <body>
-  <h1>v2.8<h1>
+  <h1>v3.0<h1>
 
       <h2>Current Location</h2>
       <p id="coordswatch">Waiting for location...</p>
@@ -52,7 +52,7 @@
           // Decay in m/s - 3 is a good number for walking pace, 
           // ideally change decay to 11 m/s for travel at 40kmh
           // or change to 25 m/s for travel at 100kmh
-          constructor(decay = 3) {
+          constructor(decay = 0.5) {
             this.decay = decay
             this.variance = -1
             this.minAccuracy = 1
