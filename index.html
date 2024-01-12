@@ -10,7 +10,7 @@
 </head>
 
 <body>
-  <h1>v2.7<h1>
+  <h1>v2.8<h1>
 
       <h2>Current Location</h2>
       <p id="coordswatch">Waiting for location...</p>
@@ -158,7 +158,7 @@
 
         function showwatchPosition(smoothLat, smoothLng, acc) {
           const x = document.getElementById("coordswatch");
-          x.innerHTML = `Smoothed latitude: ${smoothLat}, smoothed longitude: ${smoothLng}`;
+          x.innerHTML = `lat: ${smoothLat}, lon: ${smoothLng}, acc: ${acc}`;
           // Loop over the locations array and calculate the distance to each one
           for (let location of locations) {
             // Get the fixed point coordinates
@@ -167,7 +167,6 @@
 
             // Calculate the distance using the haversine formula
             const distance = haversineDistance([smoothLat, smoothLng], [lat2, lon2]);
-            x.innerHTML = `lat: ${smoothLat}, lon: ${smoothLng}, acc: ${acc}`;
 
             // Convert the distance from km to m
             //const distanceInMeters = distance * 1000;
