@@ -17,9 +17,9 @@
 </head>
 
 <body>
-  <h1>v3.6<h1>
+  <h1>v3.7<h1>
 
-      <h2 style="display: inline-block;">Current Location</h2>
+      <h2>Current Location</h2>
       <p id="coordswatch">Waiting for location...</p>
       <div id="outer"></div>
       <!--
@@ -171,7 +171,8 @@
         // Create an array of objects to store the locations and their names
         //format: {name: "Robotics Walkway", lat: 34.123754, lon: -117.7378068},
         const locations = [
-          { name: "Boracay", lat: 11.9652483, lon: 121.92837 },
+          //{ name: "Boracay", lat: 11.9652483, lon: 121.92837 },
+          { name: "Boracay", lat: 11.965268165, lon: 121.92838677 },
           { name: "Alf Museum 2F Back Door", lat: 34.1233579, lon: -117.7390518 },
           { name: "Alf Museum Front Door", lat: 34.1235657, lon: -117.7389072 },
           { name: "Alf Museum 2F Bathroom", lat: 34.1235885, lon: -117.7390106 },
@@ -205,7 +206,7 @@
             const bearingVal = bearing(smoothLat, smoothLng, lat2, lon2)
             // Display the distance in a new element with the location name
             const y = document.getElementById(`distancewatch-${location.name}`);
-            y.innerHTML = `<h2>${location.name}</h2><p>Distance: ${distanceInMeters.toFixed(2)} m, Bearing: ${bearingVal.toFixed(0)} <span style="display:inline-block;transform:rotate(${bearingVal-90}deg)">&#10148;</span></p>`; // Round the distance to 2 decimal places and use tags
+            y.innerHTML = `<h2>${location.name}</h2><p>Distance: ${distanceInMeters.toFixed(2)} m, Bearing: ${bearingVal.toFixed(0)} <span style="display:block;transform:rotate(${bearingVal-90}deg)">&#10148;</span></p>`; // Round the distance to 2 decimal places and use tags
           }
         }
 
