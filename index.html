@@ -17,7 +17,7 @@
 </head>
 
 <body>
-  <h1>v3.1<h1>
+  <h1>v3.2<h1>
 
       <h2>Current Location</h2>
       <p id="coordswatch">Waiting for location...</p>
@@ -203,10 +203,10 @@
             //const distanceInMeters = distance * 1000;
             const distanceInMeters = distance * 1;
 
-            const bearing=bearing(smoothLat, smoothLng,lat2,lon2)
+            const bearingVal=bearing(smoothLat, smoothLng,lat2,lon2)
             // Display the distance in a new element with the location name
             const y = document.getElementById(`distancewatch-${location.name}`);
-            y.innerHTML = `<h2>${location.name}</h2><p>Distance: ${distanceInMeters.toFixed(2)} m, Bearing: ${bearing.toFixed(0)}</p>`; // Round the distance to 2 decimal places and use tags
+            y.innerHTML = `<h2>${location.name}</h2><p>Distance: ${distanceInMeters.toFixed(2)} m, Bearing: ${bearingVal.toFixed(0)}</p>`; // Round the distance to 2 decimal places and use tags
           }
         }
 
