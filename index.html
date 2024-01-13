@@ -4,13 +4,20 @@
 <head>
   <!-- https://james2moore.github.io/geo/ -->
   <!-- https://github.com/nzjs/kalman-filter-js?tab=readme-ov-file -->
+  <!--
+    ➣ U+27A3 &#10147;
+    ⮚ U+2B9A &#11162;
+    ➤ U+27A4 &#10148;
+    🠖 U+1F816 &#129046;
+    🡲 U+1F872 &#129138; 
+  -->
   <title>Geolocation Example</title>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 
 </head>
 
 <body>
-  <h1>v3.0<h1>
+  <h1>v3.1<h1>
 
       <h2>Current Location</h2>
       <p id="coordswatch">Waiting for location...</p>
@@ -23,6 +30,30 @@
      -->
 
       <script type="module">
+        // Converts from degrees to radians.
+        function toRadians(degrees) {
+          return degrees * Math.PI / 180;
+        };
+
+        // Converts from radians to degrees.
+        function toDegrees(radians) {
+          return radians * 180 / Math.PI;
+        }
+
+
+        function bearing(startLat, startLng, destLat, destLng) {
+          startLat = toRadians(startLat);
+          startLng = toRadians(startLng);
+          destLat = toRadians(destLat);
+          destLng = toRadians(destLng);
+          y = Math.sin(destLng - startLng) * Math.cos(destLat);
+          x = Math.cos(startLat) * Math.sin(destLat) -
+            Math.sin(startLat) * Math.cos(destLat) * Math.cos(destLng - startLng);
+          brng = Math.atan2(y, x);
+          brng = toDegrees(brng);
+          return (brng + 360) % 360;
+        }
+
         const asin = Math.asin
         const cos = Math.cos
         const sin = Math.sin
@@ -172,9 +203,10 @@
             //const distanceInMeters = distance * 1000;
             const distanceInMeters = distance * 1;
 
+            const bearing=bearing(smoothLat, smoothLng,lat2,lon2)
             // Display the distance in a new element with the location name
             const y = document.getElementById(`distancewatch-${location.name}`);
-            y.innerHTML = `<h2>${location.name}</h2><p>Distance: ${distanceInMeters.toFixed(2)} m</p>`; // Round the distance to 2 decimal places and use tags
+            y.innerHTML = `<h2>${location.name}</h2><p>Distance: ${distanceInMeters.toFixed(2)} m, Bearing: ${bearing.toFixed(0)}</p>`; // Round the distance to 2 decimal places and use tags
           }
         }
 
