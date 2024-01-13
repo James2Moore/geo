@@ -17,10 +17,11 @@
 </head>
 
 <body>
-  <h1>v2<h1>
+  <h1>v3<h1>
 
       <h2>Current Location</h2>
       <p id="coordswatch">Waiting for location...</p>
+      <span>disc</span><span style="display: inline-block;transform: rotate(45deg);"></span>
       <div id="outer"></div>
       <!--
     <script src="kalman_gps.js"></script>
@@ -207,7 +208,7 @@
             const bearingVal = bearing(smoothLat, smoothLng, lat2, lon2)
             // Display the distance in a new element with the location name
             const y = document.getElementById(`distancewatch-${location.name}`);
-            y.innerHTML = `<h2>${location.name}</h2><span>Distance: ${distanceInMeters.toFixed(2)} m, Bearing: ${bearingVal.toFixed(0)}</span><span style="style:block;transform:rotate(${bearingVal-90}deg)">&#10148;</span>`; // Round the distance to 2 decimal places and use tags
+            y.innerHTML = `<h2>${location.name}</h2><span>Distance: ${distanceInMeters.toFixed(2)} m, Bearing: ${bearingVal.toFixed(0)}</span><span style="style:block;transform:rotate(${bearingVal - 90}deg)">&#10148;</span>`; // Round the distance to 2 decimal places and use tags
           }
         }
 
