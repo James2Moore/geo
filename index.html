@@ -20,7 +20,7 @@
 </head>
 
 <body>
-  <h1>v1<h1>
+  <h1>v12<h1>
 
       <h2>Current Location</h2>
       <span>disc<span style="display:inline-block;transform:rotate(45deg);font-size: 3em;">&#10148;</span></span>
@@ -222,7 +222,7 @@
             const bearingVal = bearing(smoothLat, smoothLng, lat2, lon2)
             // Display the distance in a new element with the location name
             const y = document.getElementById(`distancewatch-${location.name}`);
-            y.innerHTML = `<h2>${location.name}</h2><span>Distance: ${distanceInMeters.toFixed(2)} m, Bearing: ${bearingVal.toFixed(0)}<span style="display:inline-block;font-size:3em;transform:rotate(${bearingVal + lastAlpha - 90}deg)">&#10148;</span></span>`; // Round the distance to 2 decimal places and use tags
+            y.innerHTML = `<h2>${location.name}</h2><span>Distance: ${distanceInMeters.toFixed(2)} m, Bearing: ${bearingVal.toFixed(0)}<span style="display:inline-block;font-size:3em;transform:rotate(${bearingVal - lastAlpha}deg)">&#10148;</span></span>`; // Round the distance to 2 decimal places and use tags
           }
         }
 
