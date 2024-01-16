@@ -20,7 +20,7 @@
 </head>
 
 <body>
-  <h1>v12345<h1>
+  <h1>v123456<h1>
 
       <h2>Current Location</h2>
       <span>disc<span style="display:inline-block;transform:rotate(45deg);font-size: 3em;">&#10148;</span></span>
@@ -45,7 +45,7 @@
           lastAlpha = 360 - event.alpha;
           orientationWatch.textContent = `Orientation: ${Math.round(360 - lastAlpha)}, ${event.absolute}, ${event.webkitCompassHeading}`
         }
-        window.addEventListener('ondeviceorientationabsolute', WatchOrientation)
+        window.addEventListener('deviceorientationabsolute', WatchOrientation)
 
         // Converts from degrees to radians.
         function toRadians(degrees) {
