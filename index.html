@@ -11,17 +11,21 @@
     🠖 U+1F816 &#129046;
     🡲 U+1F872 &#129138; 
   -->
+  <!--
+    使用json文件保存数据，读取坐标并判断在哪个学校坐标，自动读取学校的数据文件并显示  
+  -->
   <title>Geolocation Example</title>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 
 </head>
 
 <body>
-  <h1>v1<h1>
+  <h1>v2<h1>
 
       <h2>Current Location</h2>
       <span>disc<span style="display:inline-block;transform:rotate(45deg);font-size: 2em;">&#10148;</span></span>
       <p id="coordswatch">Waiting for location...</p>
+      <p id="orientationWatch">orientation: </p>
       <div id="outer"></div>
       <!--
     <script src="kalman_gps.js"></script>
@@ -31,6 +35,13 @@
      -->
 
       <script type="module">
+        let lastAlpha = 0;
+        function WatchOrientation(event) {
+          lastAlpha = event.alpha;
+          orientationWatch.textContent = `Orientation: ${lastAlpha}`
+        }
+        window.addEventListener('deviceorientation', WatchOrientation)
+
         // Converts from degrees to radians.
         function toRadians(degrees) {
           return degrees * Math.PI / 180;
