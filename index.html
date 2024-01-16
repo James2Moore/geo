@@ -202,7 +202,7 @@
 
         function showwatchPosition(smoothLat, smoothLng, acc) {
           const x = document.getElementById("coordswatch");
-          x.innerHTML = `lat: ${smoothLat}, lon: ${smoothLng}, acc: ${acc}`;
+          x.innerHTML = `lat: ${smoothLat.toFixed(5)}, lon: ${smoothLng.toFixed(5)}, acc: ${acc.toFixed(2)}`;
           // Loop over the locations array and calculate the distance to each one
           for (let location of locations) {
             // Get the fixed point coordinates
