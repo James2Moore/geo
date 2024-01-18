@@ -2,249 +2,128 @@
 <html>
 
 <head>
-  <!-- https://james2moore.github.io/geo/ -->
-  <!-- https://github.com/nzjs/kalman-filter-js?tab=readme-ov-file -->
-  <!-- https://stackoverflow.com/questions/49696561/access-compass-data-in-mobile-web-html5 方向问题-->
-  <!--
-    ➣ U+27A3 &#10147;
-    ⮚ U+2B9A &#11162;
-    ➤ U+27A4 &#10148;
-    🠖 U+1F816 &#129046;
-    🡲 U+1F872 &#129138; 
-  -->
-  <!--
-    使用json文件保存数据，读取坐标并判断在哪个学校坐标，自动读取学校的数据文件并显示  
-  -->
-  <title>Geolocation Example</title>
+  <!--https://james2moore.github.io/geo/-->
+  <title>Signpost</title>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <script type="module">
+    //所有地点的信息
+    const PLACES = [
+      {
+        "name": "The Webb Schools",
+        "boundary": [
+          [34.129938, -117.742799, 34.128788, -117.739827],
+          [34.128788, -117.742598, 34.127339, -117.736260],
+          [34.127339, -117.742472, 34.124354, -117.733227],
+          [34.124354, -117.740821, 34.121610, -117.735081]
+        ],
+        "place": [
+          ["Price Dining Hall", 34.1241543, -117.7398563],
+          {
+            "name": "Library",
+            "place": [
+              ["Library Door", 34.1238431, -117.7390556],
+              ["Library Room North, 3, South", 34.1239534, -117.7388547],
+              ["Library Room 2", 34.1240165, -117.7387937],
+            ]
+          }
+        ]
+      },
+      {
+        "name": "La Verne Towne Center",
+        "boundary": [
+          [34.113511, -117.763343, 34.107986, -117.757244]
+        ],
+        "place": [
+          ["Parking lot entrance and exit", 34.111508, -117.760086],
+          ['West parking lot', 34.111069, -117.761092],
+          ["East parking lot", 34.110423, -117.759410],
+          ["Bus station, Stop ID:1347", 34.111779, -117.761104],
+          ["Target Grocery", 34.110009, -117.759385],
+          ["Staples(Office supply store)", 34.110757, -117.761217],
+          ["McDonald's", 34.112866, -117.762204]
+        ]
+      },
+      {
+        "name": "Boracay Island",
+        "boundary": [
+          [11.998052, 121.902291, 11.940964, 121.952756]
+        ],
+        "place": [
+          ["S1 Beach", 11.968732, 121.918694],
+          ["S2 Beach", 11.960763, 121.924721],
+          ["S3 Beach", 11.953299, 121.929169],
+          ["Bulabog Beach", 11.965783, 121.928838],
+          {
+            "name": "Restaurant",
+            "place": [
+              ["McDonald's", 11.962948, 121.926563],
+              ["The Pig Out Bistro", 11.965298, 121.923524]
+            ]
+          },
+          {
+            "name": "Supermarket",
+            "place": [
+              ["Budget Mart", 11.963232267224607, 121.92638565938344],
+              ["Robinsons Supermarket", 11.975197752900698, 121.9184145513564],
+              ["CityMall Boracay", 11.979172241037892, 121.92073167663847],
+            ]
+          }
+        ]
+      },
+    ]//PLACES
+    if (navigator.geolocation) {
+      /*addEventListener("load", () => {
 
+      })*/
+      // Call watchPosition once to start tracking the user location
+      let lastCheckPlaceTime = 0//最后检查地点的时间
+      let lastPlace//最后显示的地点
+      function updatePlace() {
+        console.log('updatePlace',lastPlace)
+      }
+      navigator.geolocation.watchPosition(position => {
+        // Get the raw GPS data
+        const lat = position.coords.latitude
+        const lng = position.coords.longitude
+        const acc = position.coords.accuracy
+        const timems = position.timestamp
+        if (timems - lastCheckPlaceTime > 3000) {//如果上一次检查已经过去3秒，则再次检查；即每3秒检查一次
+          let findPlace//找到的地点
+          for (const place of PLACES) {//遍历所有地点
+            for (const boundary of place.boundary) {//遍历地点的所有矩形框
+              //如果在地点的边界内
+              if (lat > boundary[0] && lat < boundary[2] && lng > boundary[1] && lng > boundary[3]) {
+                //如果最后显示的地点不是此地点，则表示进入了某地点
+                findPlace = place
+                break
+              }
+            }//for boundary
+            if (findPlace) break//如果已找到地点，则强制结束
+          }//for place
+          lastCheckPlaceTime = timems//更新检查时间
+          if (lastPlace != findPlace) {
+            lastPlace = findPlace
+            updatePlace()
+          }
+        }
+      }, error => {
+        errorText.textContent = `Error getting user location: ${error}`
+      }, {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+      })
+    } else {
+      errorText.textContent = 'Geolocation is not supported by this browser.'
+    }
+
+  </script>
 </head>
 
 <body>
-  <h1>v123<h1>
-
-      <h2>Current Location</h2>
-      <span>disc<span style="display:inline-block;transform:rotate(45deg);font-size: 3em;">&#10148;</span></span>
-      <p id="coordswatch">Waiting for location...</p>
-      <p id="orientationWatch">orientation: </p>
-      <div id="outer"></div>
-      <!--
-    <script src="kalman_gps.js"></script>
-    -->
-      <!--
-    <script src="locationfind.js"></script>
-     -->
-
-      <script type="module">
-        window.addEventListener("compassneedscalibration", function (event) {
-          alert('您的罗盘需要校准, 请将设备沿数字8方向移动。');
-          event.preventDefault();
-        }, true)
-
-        let lastAlpha = 0;
-        function WatchOrientation(event) {
-          lastAlpha = 360 - event.alpha;
-          orientationWatch.textContent = `Orientation: ${Math.round(360 - lastAlpha)}, ${event.absolute}, ${event.webkitCompassHeading}`
-        }
-        window.addEventListener('deviceorientationabsolute', WatchOrientation)
-
-        // Converts from degrees to radians.
-        function toRadians(degrees) {
-          return degrees * Math.PI / 180;
-        };
-
-        // Converts from radians to degrees.
-        function toDegrees(radians) {
-          return radians * 180 / Math.PI;
-        }
-
-
-        function bearing(startLat, startLng, destLat, destLng) {
-          startLat = toRadians(startLat);
-          startLng = toRadians(startLng);
-          destLat = toRadians(destLat);
-          destLng = toRadians(destLng);
-          let y = Math.sin(destLng - startLng) * Math.cos(destLat);
-          let x = Math.cos(startLat) * Math.sin(destLat) - Math.sin(startLat) * Math.cos(destLat) * Math.cos(destLng - startLng);
-          let brng = Math.atan2(y, x);
-          brng = toDegrees(brng);
-          return (brng + 360) % 360;
-        }
-
-        const asin = Math.asin
-        const cos = Math.cos
-        const sin = Math.sin
-        const sqrt = Math.sqrt
-        const PI = Math.PI
-
-        // equatorial mean radius of Earth (in meters)
-        const R = 6378137
-
-        function squared(x) { return x * x }
-        function toRad(x) { return x * PI / 180.0 }
-        function hav(x) {
-          return squared(sin(x / 2))
-        }
-
-        // hav(theta) = hav(bLat - aLat) + cos(aLat) * cos(bLat) * hav(bLon - aLon)
-        function haversineDistance(a, b) {
-          const aLat = toRad(Array.isArray(a) ? a[1] : a.latitude ?? a.lat)
-          const bLat = toRad(Array.isArray(b) ? b[1] : b.latitude ?? b.lat)
-          const aLng = toRad(Array.isArray(a) ? a[0] : a.longitude ?? a.lng ?? a.lon)
-          const bLng = toRad(Array.isArray(b) ? b[0] : b.longitude ?? b.lng ?? b.lon)
-          const ht = hav(bLat - aLat) + cos(aLat) * cos(bLat) * hav(bLng - aLng)
-          return 2 * R * asin(sqrt(ht))
-        }
-
-        class GPSKalmanFilter {
-          // Decay in m/s - 3 is a good number for walking pace, 
-          // ideally change decay to 11 m/s for travel at 40kmh
-          // or change to 25 m/s for travel at 100kmh
-          constructor(decay = 1) {
-            this.decay = decay
-            this.variance = -1
-            this.minAccuracy = 1
-          }
-
-          // Kalman filter processing for latitude and longitude
-          //
-          // lat = new measurement of latitude
-          // lon = new measurement of longitude
-          // accuracy = measurement of 1 standard deviation error in metres
-          // timestampInMs = time of measurement from geolocation service
-          // 
-          // This returns a new filtered X Y geolocation
-          //
-          filter(lat, lon, accuracy, timestampInMs) {
-            if (accuracy < this.minAccuracy) accuracy = this.minAccuracy
-            //console.log('accuracy is', accuracy)
-
-            // if variance < 0, object is unitialised, so initialise with current values
-            if (this.variance < 0) {
-              //console.log('initialised values')
-              this.timestampInMs = timestampInMs
-              this.lat = lat
-              this.lon = lon
-              this.variance = accuracy * accuracy
-            }
-
-            // else apply Kalman filter methodology
-            else {
-              //console.log('applying kalman filtering now')
-              const timeIncMs = timestampInMs - this.timestampInMs
-
-              // time has moved on, so the uncertainty in the current position increases
-              if (timeIncMs > 0) {
-                this.variance += (timeIncMs * this.decay * this.decay) / 1000
-                this.timestampInMs = timestampInMs
-              }
-              // TODO: USE VELOCITY INFORMATION HERE TO GET A BETTER ESTIMATE OF CURRENT POSITION ?
-              // Kalman gain matrix K = Covarariance * Inverse(Covariance + MeasurementVariance)
-              // NB: because K is dimensionless, it doesn't matter that variance has different units to lat and lon
-              const _k = this.variance / (this.variance + (accuracy * accuracy))
-              this.lat += _k * (lat - this.lat)
-              this.lon += _k * (lon - this.lon)
-              // new Covarariance  matrix is (IdentityMatrix - K) * Covarariance 
-              this.variance = (1 - _k) * this.variance
-            }
-            return [this.lat, this.lon]
-          }
-        }//class 
-        function WatchLocation() {
-          if (navigator.geolocation) {
-            // Call watchPosition once to start tracking the user location
-            const watchID = navigator.geolocation.watchPosition(
-              function (position) {
-                // Get the raw GPS data
-                const lat = position.coords.latitude;
-                const lng = position.coords.longitude;
-                const acc = position.coords.accuracy;
-                const timems = position.timestamp;
-
-                // Apply the Kalman filter to the GPS data
-                let kalmanXY = kalman.filter(lat, lng, acc, timems);
-
-                // Get the smoothed coordinates from the filter output
-                const smoothLat = kalmanXY[0];
-                const smoothLng = kalmanXY[1];
-
-                //console.log(`Smoothed latitude: ${smoothLat}, smoothed longitude: ${smoothLng}, accuracy: ${acc}, timeS: ${Math.floor(timems / 1000)}`);
-                showwatchPosition(smoothLat, smoothLng, acc); // Call showPosition to update the coordinates on the screen using the smoothed values
-              },
-              function (error) {
-                console.error("Error getting user location:", error);
-              },
-              {
-                enableHighAccuracy: true,
-                timeout: 5000,
-                maximumAge: 0
-              }
-            );
-          } else {
-            const x = document.getElementById("coordswatch");
-            x.innerHTML = "Geolocation is not supported by this browser.";
-          }
-        }
-
-        // Create an array of objects to store the locations and their names
-        //format: {name: "Robotics Walkway", lat: 34.123754, lon: -117.7378068},
-        const locations = [
-          { name: "Hiagens", lat: 11.965600, lon: 121.928390 },
-          { name: "Alf Museum 2F Back Door", lat: 34.1233579, lon: -117.7390518 },
-          { name: "Alf Museum Front Door", lat: 34.1235657, lon: -117.7389072 },
-          { name: "Alf Museum 2F Bathroom", lat: 34.1235885, lon: -117.7390106 },
-          { name: "South Hutch Front Door", lat: 34.1239831, lon: -117.7384314 },
-          { name: "South Hutch Room 414", lat: 34.1239599, lon: -117.7382364 },
-          { name: "South Hutch Room 413", lat: 34.1239646, lon: -117.7382196 },
-          { name: "Price Dining Hall", lat: 34.1241543, lon: -117.7398563 },
-          { name: "Nelson Room 103", lat: 34.1239755, lon: -117.77395852 },
-          { name: "Liu Cheung Theater", lat: 34.1240131, lon: -117.7395663 },
-          { name: "Library Door", lat: 34.1238431, lon: -117.7390556 },
-          { name: "Library Room North, 3, South", lat: 34.1239534, lon: -117.7388547 },
-          { name: "Library Room 2", lat: 34.1240165, lon: -117.7387937 },
-        ];
-
-        function showwatchPosition(smoothLat, smoothLng, acc) {
-          const x = document.getElementById("coordswatch");
-          x.innerHTML = `lat: ${smoothLat.toFixed(5)}, lon: ${smoothLng.toFixed(5)}, acc: ${acc.toFixed(2)}`;
-          // Loop over the locations array and calculate the distance to each one
-          for (let location of locations) {
-            // Get the fixed point coordinates
-            const lat2 = location.lat;
-            const lon2 = location.lon;
-
-            // Calculate the distance using the haversine formula
-            const distance = haversineDistance([smoothLat, smoothLng], [lat2, lon2]);
-
-            // Convert the distance from km to m
-            //const distanceInMeters = distance * 1000;
-            const distanceInMeters = distance * 1;
-
-            const bearingVal = bearing(smoothLat, smoothLng, lat2, lon2)
-            // Display the distance in a new element with the location name
-            const y = document.getElementById(`distancewatch-${location.name}`);
-            y.innerHTML = `<h2>${location.name}</h2><span>Distance: ${distanceInMeters.toFixed(2)} m, Bearing: ${bearingVal.toFixed(0)}<span style="display:inline-block;font-size:3em;transform:rotate(${bearingVal - lastAlpha-90}deg)">&#10148;</span></span>`; // Round the distance to 2 decimal places and use tags
-          }
-        }
-
-        const kalman = new GPSKalmanFilter();
-        window.addEventListener("load", WatchLocation);
-
-        // Loop over the locations array and create the HTML elements for each one
-        for (let location of locations) {
-          // Create a new h1 element with the location name and coordinates
-          const h1 = document.createElement("h1");
-          h1.textContent = `Haversine Distance ${location.name} (${location.lat}, ${location.lon})`;
-
-          // Create a new div element for the distance and append it to the outer div
-          const outer = document.getElementById("outer");
-          const distancewatch = document.createElement("div");
-          distancewatch.id = `distancewatch-${location.name}`;
-          outer.appendChild(h1); // Comment out or delete this line to remove the haversine distance titles
-          outer.appendChild(distancewatch);
-        }
-      </script>
-
+  <div id="placeList">
+  </div>
+  <h2 id="errorText"></h2>
 </body>
 
 </html>
