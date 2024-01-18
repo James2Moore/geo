@@ -95,7 +95,7 @@
             for (const boundary of place.boundary) {//遍历地点的所有矩形框
               console.log('a3', boundary)
               //如果在地点的边界内
-              if (lat < boundary[0] && lat > boundary[2] && lng > boundary[1] && lng > boundary[3]) {
+              if (lat < boundary[0] && lat > boundary[2] && lng > boundary[1] && lng < boundary[3]) {
                 //note:lat左上角比右下角数值大
                 //如果最后显示的地点不是此地点，则表示进入了某地点
                 console.log('a4')
@@ -126,7 +126,7 @@
 </head>
 
 <body>
-  <h1>123</h1>
+  <h1>1234</h1>
   <div id="placeList">
   </div>
   <h2 id="errorText"></h2>
