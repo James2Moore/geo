@@ -83,6 +83,7 @@
       }
       navigator.geolocation.watchPosition(position => {
         // Get the raw GPS data
+        console.log('a1')
         const lat = position.coords.latitude
         const lng = position.coords.longitude
         const acc = position.coords.accuracy
@@ -90,10 +91,13 @@
         if (timems - lastCheckPlaceTime > 3000) {//如果上一次检查已经过去3秒，则再次检查；即每3秒检查一次
           let findPlace//找到的地点
           for (const place of PLACES) {//遍历所有地点
+            console.log('a2',place)
             for (const boundary of place.boundary) {//遍历地点的所有矩形框
+              console.log('a3',boundary)
               //如果在地点的边界内
               if (lat > boundary[0] && lat < boundary[2] && lng > boundary[1] && lng > boundary[3]) {
                 //如果最后显示的地点不是此地点，则表示进入了某地点
+                console.log('a4')
                 findPlace = place
                 break
               }
