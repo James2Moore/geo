@@ -364,11 +364,12 @@
     } else {
       errorText.textContent = 'Geolocation is not supported by this browser.'
     }
+    var map = L.map('mapDiv', {center: [51.505, -0.09],zoom: 13});
   </script>
 </head>
 
 <body>
-  <h2>1234567</h2>
+  <h2>1</h2>
   <div id="placeList"></div>
   <h2 id="errorText"></h2>
   <div id="mapDiv" style="height:10rem;"></div>
