@@ -350,7 +350,7 @@
           }
         }
         if (timems - lastUpdateLocationTime > 500) {//如果上一次检查已经过去300ms，则再次刷新
-          updateLocation(l)
+          updateLocation()
           lastUpdateLocationTime = timems
         }
       }, error => {
@@ -367,7 +367,7 @@
 </head>
 
 <body>
-  <h2>12</h2>
+  <h2>123</h2>
   <div id="placeList"></div>
   <h2 id="errorText"></h2>
   <div id="mapDiv" style="height:10rem;background-color:aqua;"></div>
