@@ -265,6 +265,8 @@
               const map = L.map(lastMapDiv)
               map.fitBounds([[lastLat, lastLng], [liEle.lat, liEle.lon]])
               const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy;<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map)
+              L.marker([lastLat, lastLng]).addTo(map)
+              L.marker([liEle.lat, liEle.lon], { title: labelEle.textContent }).addTo(map)
             })
           } else {
             //如果是对象，则是地点分类
@@ -374,7 +376,7 @@
 </head>
 
 <body>
-  <h2>1</h2>
+  <h2>12</h2>
   <div id="placeList"></div>
   <h2 id="errorText"></h2>
 </body>
