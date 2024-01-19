@@ -257,7 +257,7 @@
             liEle.addEventListener('click', () => {
               //L.map('mapDiv').setView([51.505, -0.09], 13)
               console.log('a1', [[lastLat, lastLng], [liEle.lat, liEle.lon]])
-              L.map(mapDiv).fitBounds([[lastLat, lastLng], [liEle.lat, liEle.lon]])
+              L.map(mapDiv).fitBounds([[lastLng, lastLat], [liEle.lon, liEle.lat]])
               liEle.appendChild(mapDiv)
             })
           } else {
@@ -368,10 +368,10 @@
 </head>
 
 <body>
-  <h2>1234</h2>
+  <h2>12345</h2>
   <div id="placeList"></div>
   <h2 id="errorText"></h2>
-  <div id="mapDiv" style="height:10rem;background-color:aqua;"></div>
+  <div id="mapDiv" style="height:10rem;"></div>
 </body>
 
 </html>
