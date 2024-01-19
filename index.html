@@ -233,6 +233,7 @@
       let lastCheckPlaceTime = 0//最后检查地点的时间
       let lastPlace//最后显示的地点
       let lastUpdateLocationTime = 0//最后刷新距离的时间
+      let lastMapDiv
       const kalman = new GPSKalmanFilter()
 
       function itemClick() {
@@ -255,10 +256,15 @@
             bEle.innerHTML = '&#10148;'
             liEle.appendChild(bEle)
             liEle.addEventListener('click', () => {
-              const map = L.map(mapDiv)
+              if (lastMapDiv) {
+                lastMapDiv.remove()
+              }
+              lastMapDiv = document.createElement('div')
+              lastMapDiv.style.height = '10rem'
+              liEle.appendChild(lastMapDiv)
+              const map = L.map(lastMapDiv)
               map.fitBounds([[lastLat, lastLng], [liEle.lat, liEle.lon]])
               const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy;<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map)
-              liEle.appendChild(mapDiv)
             })
           } else {
             //如果是对象，则是地点分类
@@ -368,10 +374,9 @@
 </head>
 
 <body>
-  <h2>1324</h2>
+  <h2>1</h2>
   <div id="placeList"></div>
   <h2 id="errorText"></h2>
-  <div id="mapDiv" style="height:10rem;"></div>
 </body>
 
 </html>
