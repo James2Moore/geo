@@ -255,6 +255,7 @@
             bEle.innerHTML = '&#10148;'
             liEle.appendChild(bEle)
             liEle.addEventListener('click', () => {
+              L.map('mapDiv').setView([51.505, -0.09], 13)
               liEle.appendChild(mapDiv)
             })
           } else {
@@ -364,7 +365,7 @@
 </head>
 
 <body>
-  <h2>12345</h2>
+  <h2>1</h2>
   <div id="placeList"></div>
   <h2 id="errorText"></h2>
   <div id="mapDiv" style="height:10rem;background-color:aqua;"></div>
