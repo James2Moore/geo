@@ -279,6 +279,7 @@
               const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy;<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map)
               L.marker([lastLat, lastLng]).addTo(map)
               L.marker([liEle.lat, liEle.lon]).addTo(map).bindPopup(labelEle.textContent).openPopup()
+              updateLocation()
             })
           } else {
             //如果是对象，则是地点分类
@@ -324,9 +325,14 @@
             liEle.children[1].textContent = distance.toFixed(0) + 'm'
             const bearingVal = bearing(lastLat, lastLng, liEle.lat, liEle.lon)
             //liEle.children[2].style = `display:inline-block;font-size:.8rem;margin-inline-start:.5rem;transform:rotate(${bearingVal - lastAlpha - 90}deg)`
-            liEle.children[2].style = `transform:rotate(${bearingVal - lastAlpha - 90}deg)`
+            liEle.children[2].style.transform `rotate(${bearingVal - lastAlpha - 90}deg)`
+            const mapDiv=liEle.querySelector('div')
+            if(mapDiv){
+              mapDiv.style.transform=`rotate(${bearingVal - lastAlpha - 90}deg)`
+            }
           }
         }
+        //transform: rotate(90deg);
       }
 
       let lastAlpha = 0//最后记录的手机方向
