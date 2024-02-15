@@ -275,6 +275,8 @@
               lastMapDiv.style.width=lastMapDiv.style.height=shortSize+'px'
               //const map = L.map(lastMapDiv,{center:[lastLat, lastLng]})
               const map = L.map(lastMapDiv,{
+                center: [lastLat, lastLng],
+                zoom: 2,
                 rotate: true,
                 rotateControl: {
                   closeOnZeroBearing: false,
@@ -284,7 +286,7 @@
               //计算lastLat,lastLng在中心时的外框
               const lat2=lastLat*2-liEle.lat
               const lng2=lastLng*2-liEle.lon
-              map.fitBounds([[liEle.lat, liEle.lon], [lat2, lng2]])
+              //map.fitBounds([[liEle.lat, liEle.lon], [lat2, lng2]])
               const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy;<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map)
               L.marker([lastLat, lastLng]).addTo(map)
               L.marker([liEle.lat, liEle.lon]).addTo(map).bindPopup(labelEle.textContent).openPopup()
