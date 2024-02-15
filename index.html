@@ -267,8 +267,8 @@
               lastMapDiv.classList.add('map-div')
               //lastMapDiv.style.height = '10rem'
               liEle.appendChild(lastMapDiv)
-              const map = L.map(lastMapDiv)
-              map.fitBounds([[lastLat, lastLng], [liEle.lat, liEle.lon]])
+              const map = L.map(lastMapDiv,{center:[lastLat, lastLng]})
+              //map.fitBounds([[lastLat, lastLng], [liEle.lat, liEle.lon]])
               const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy;<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map)
               L.marker([lastLat, lastLng]).addTo(map)
               L.marker([liEle.lat, liEle.lon]).addTo(map).bindPopup(labelEle.textContent).openPopup()
