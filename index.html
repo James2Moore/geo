@@ -267,9 +267,12 @@
               lastMapDiv.classList.add('map-div')
               //lastMapDiv.style.height = '10rem'
               liEle.appendChild(lastMapDiv)
+              console.log(lastMapDiv.clientWidth,lastMapDiv.clientHeight)
+              const shortSize=Math.min(lastMapDiv.clientWidth,lastMapDiv.clientHeight)
+              lastMapDiv.style.width=lastMapDiv.style.height=shortSize+'px'
               //const map = L.map(lastMapDiv,{center:[lastLat, lastLng]})
               const map = L.map(lastMapDiv)
-              //const lat2=lastLat<liEle.lat?liEle.lat*2-lastLat:liEle.lat*2-lastLat
+              //计算lastLat,lastLng在中心时的外框
               const lat2=lastLat*2-liEle.lat
               const lng2=lastLng*2-liEle.lon
               map.fitBounds([[liEle.lat, liEle.lon], [lat2, lng2]])
