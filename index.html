@@ -282,7 +282,16 @@
                   closeOnZeroBearing: false,
                   // position: 'bottomleft',
                 },
-                bearing: 30,})
+                bearing: 0,
+                // attributionControl: false,
+                // zoomControl: false,
+                compassBearing: true,
+                // trackContainerMutation: false,
+                // shiftKeyRotate: false,
+                // touchGestures: true,
+                touchRotate: true,
+                // touchZoom: true
+                 })
               //计算lastLat,lastLng在中心时的外框
               const lat2=lastLat*2-liEle.lat
               const lng2=lastLng*2-liEle.lon
