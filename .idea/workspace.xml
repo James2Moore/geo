@@ -5,10 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="44585061-33a6-4ddd-a85e-27163b860bed" name="更改" comment="2">
-      <change afterPath="$PROJECT_DIR$/leaflet-rotate-src.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/leaflet-rotate-src.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/leaflet-rotate.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/leaflet-rotate.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
     </list>
@@ -67,7 +63,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1708000703240</updated>
-      <workItem from="1708000704334" duration="9438000" />
+      <workItem from="1708000704334" duration="9773000" />
     </task>
     <task id="LOCAL-00001" summary="1">
       <option name="closed" value="true" />
@@ -221,7 +217,15 @@
       <option name="project" value="LOCAL" />
       <updated>1708011477135</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="2">
+      <option name="closed" value="true" />
+      <created>1708012868678</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1708012868678</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
