@@ -270,7 +270,7 @@
               //const map = L.map(lastMapDiv,{center:[lastLat, lastLng]})
               const map = L.map(lastMapDiv)
               const lat2=lastLat<liEle.lat?liEle.lat*2-lastLat:liEle.lat*2-lastLat
-              const lng2=lastLon<liEle.lon?liEle.lon*2-lastLng:liEle.lon*2-lastLon
+              const lng2=lastLon<liEle.lon?liEle.lon*2-lastLng:liEle.lon*2-lastLng
               //map.fitBounds([[lastLat, lastLng], [liEle.lat, liEle.lon]])
               map.fitBounds([[lastLat, lastLng], [lat2, lng2]])
               const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy;<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map)
