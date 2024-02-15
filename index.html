@@ -272,7 +272,7 @@
               liEle.appendChild(lastMapDiv)
               console.log(lastMapDiv.clientWidth,lastMapDiv.clientHeight)
               const shortSize=Math.min(lastMapDiv.clientWidth,lastMapDiv.clientHeight)
-              lastMapDiv.style.width=lastMapDiv.style.height=shortSize+'px'
+              //lastMapDiv.style.width=lastMapDiv.style.height=shortSize+'px'
               //const map = L.map(lastMapDiv,{center:[lastLat, lastLng]})
               const map = L.map(lastMapDiv,{
                 center: [lastLat, lastLng],
@@ -282,7 +282,7 @@
                   closeOnZeroBearing: false,
                   // position: 'bottomleft',
                 },
-                bearing: 0,
+                bearing: -90,
                 // attributionControl: false,
                 // zoomControl: false,
                 compassBearing: true,
