@@ -6,6 +6,8 @@
   <title>Signpost</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <!-- Leaflet-Rotate https://www.npmjs.com/package/leaflet-rotate -->
+  <script src="leaflet-rotate-src.js"></script>
   <style>
     .map-div{
       height: 51vh;
@@ -272,7 +274,13 @@
               const shortSize=Math.min(lastMapDiv.clientWidth,lastMapDiv.clientHeight)
               lastMapDiv.style.width=lastMapDiv.style.height=shortSize+'px'
               //const map = L.map(lastMapDiv,{center:[lastLat, lastLng]})
-              const map = L.map(lastMapDiv)
+              const map = L.map(lastMapDiv,{
+                rotate: true,
+                rotateControl: {
+                  closeOnZeroBearing: false,
+                  // position: 'bottomleft',
+                },
+                bearing: 30,})
               //计算lastLat,lastLng在中心时的外框
               const lat2=lastLat*2-liEle.lat
               const lng2=lastLng*2-liEle.lon
@@ -329,7 +337,7 @@
             liEle.children[2].style.transform=`rotate(${bearingVal - lastAlpha - 90}deg)`
             const mapDiv=liEle.querySelector('div')
             if(mapDiv){
-              mapDiv.style.transform=`rotate(${bearingVal - lastAlpha + 90}deg)`
+              //mapDiv.style.transform=`rotate(${bearingVal - lastAlpha + 90}deg)`
             }
           }
         }
