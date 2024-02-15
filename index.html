@@ -325,7 +325,7 @@
             liEle.children[1].textContent = distance.toFixed(0) + 'm'
             const bearingVal = bearing(lastLat, lastLng, liEle.lat, liEle.lon)
             //liEle.children[2].style = `display:inline-block;font-size:.8rem;margin-inline-start:.5rem;transform:rotate(${bearingVal - lastAlpha - 90}deg)`
-            liEle.children[2].style.transform `rotate(${bearingVal - lastAlpha - 90}deg)`
+            liEle.children[2].style.transform=`rotate(${bearingVal - lastAlpha - 90}deg)`
             const mapDiv=liEle.querySelector('div')
             if(mapDiv){
               mapDiv.style.transform=`rotate(${bearingVal - lastAlpha - 90}deg)`
